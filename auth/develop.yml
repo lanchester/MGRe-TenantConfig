@@ -1,0 +1,27 @@
+version: 1
+
+api:
+  request:
+    base_url: https://develop.mgre.co.jp/
+    common_params:
+    common_headers:
+      "Content-Type": application/x-www-form-urlencoded
+  response:
+    format: xml
+  configured:
+    api1:
+      http_method: post
+      path: path/to/api1
+      request:
+        params:
+        headers:
+    api2:
+      http_method: get
+      path: path/to/api2
+      request:
+        params:
+        headers:
+
+client:
+  timeout: 8
+  retry_count: 3

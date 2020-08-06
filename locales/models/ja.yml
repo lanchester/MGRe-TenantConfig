@@ -1,0 +1,642 @@
+---
+ja:
+  activerecord: &activerecord
+    errors:
+      messages:
+        record_invalid: "バリデーションに失敗しました: %{errors}"
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
+    models:
+      news: ニュース
+      information: お知らせ
+      coupon: クーポン
+      banner: バナー
+      category: カテゴリー
+      store: 店舗
+      store_image: 店舗画像
+      favorite_store: お気に入り店舗
+      cms_user: CMSユーザー
+      notification: プッシュ配信
+      deep_link_setting: ディープリンク設定
+      segment: セグメント
+      segment/user_attribute: ユーザー属性設定
+      medium: 画像
+      category: ニュースカテゴリー
+      store_label: 店舗属性ラベル
+      crawler/account: 連携元
+      item: 商品
+      item_category: 商品カテゴリー
+      item_spec_content: 仕様
+      item_label: 商品属性ラベル
+      user: 会員
+      user_account: ユーザーアカウント
+      device: 端末
+      restore_user: 復元履歴
+      point_history: ポイント履歴
+      visit_history: 来店履歴
+      restore_device: 復元端末
+      related_item: 関連商品
+      news_tab: ニュースタブ
+      rank: ランク
+      store_configuration: フォロー店舗設定
+
+    attributes:
+      distribution_setting: &distribution_setting
+        status: 状態
+        publish_start_at: 公開開始日時
+        publish_end_at: 公開終了日時
+        publish_period: 公開期間
+      deep_link_setting_attributes: &deep_link_setting_attributes
+        deep_link_type: リンク
+        deep_link_id: ID
+        external_url: 外部URL
+        link_label: リンクラベル
+        item_headline: 関連商品見出し
+      news:
+        id: ID
+        title: タイトル
+        description: 詳細
+        popup_type: 種別
+        view_type: 遷移タイプ
+        category_id: カテゴリー
+        category: カテゴリー
+        picture_card_style: ピクチャーカードスタイル
+        url: URL
+        <<: *distribution_setting
+        <<: *deep_link_setting_attributes
+        created_at: 作成日時
+        updated_at: 更新日時
+      category:
+        id: ID
+        name: カテゴリー名
+        icon: 画像
+      information:
+        id: ID
+        user_id: ユーザーID
+        title: タイトル
+        description: 詳細
+        popup_type: 種別
+        view_type: 遷移タイプ
+        target_type: 表示先
+        delivery_type: システム連携
+        url: URL
+        <<: *distribution_setting
+        <<: *deep_link_setting_attributes
+        created_at: 作成日時
+        updated_at: 更新日時
+      banner:
+        id: ID
+        target_type: 表示先
+        view_type: 遷移タイプ
+        image: 画像
+        width: 幅
+        height: 高さ
+        url: URL
+        note: 備考
+        <<: *distribution_setting
+        <<: *deep_link_setting_attributes
+        created_at: 作成日時
+        updated_at: 更新日時
+        news_tab: ニュース
+        news2_tab: ニュース2
+      banner_target:
+        banner_id: バナーID
+        target_type: 公開先種別
+      store:
+        id: ID
+        name: 店舗名
+        description: 店舗詳細
+        store_code: 店舗コード
+        image: 店舗画像
+        zip_code: 郵便番号
+        address: 住所
+        prefecture_code: 都道府県
+        city: 市区町村
+        address_1: 町名番地
+        address_2: 建物名
+        lat: 緯度
+        lng: 経度
+        tel: 電話番号
+        fax: FAX
+        business_hours: 営業時間
+        regular_holiday: 定休日
+        url: URL
+        country: 国
+        access: アクセス
+        free_text: 補足事項
+        search_keyword: 検索キーワード
+        status: 状態
+        created_at: 作成日時
+        updated_at: 更新日時
+      store_label:
+        id: ID
+        name: ラベル名
+        background_color: 背景色
+      favorite_store:
+        store_id: 店舗
+        user_id: 会員
+      cms_user:
+        id: ID
+        name: 名前
+        first_name: 名
+        last_name: 姓
+        email: メールアドレス
+        role: 役割
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        email_notification: お知らせメール
+        created_at: 登録日時
+        last_sign_in_at: 最終ログイン日時
+      notification:
+        id: ID
+        user_id: ユーザーID
+        title: タイトル
+        body: 本文
+        <<: *deep_link_setting_attributes
+        label: ラベル
+        publish_type: 配信タイプ
+        publishing_start_at: 配信開始日時
+        publishing_finish_at: 配信完了日時
+        publish_at: 配信日時
+        delivery_type: システム連携
+        target_type: 対象
+        target_count: 配信数
+        read_count: 既読数
+        reading_rate: 開封率
+        status: 状態
+        target_ids: 送信先ユーザーID
+        created_at: 作成日時
+        updated_at: 更新日時
+      coupon:
+        id: ID
+        coupon_type: 種別
+        title: タイトル
+        description: 詳細
+        presentation: 使用方法
+        notes: 注意事項
+        available_stores_text: 利用可能店舗
+        coupon_image: 画像
+        coupon_image_id: 画像
+        usage_rule: 回数
+        using_barcode: バーコード
+        barcode: バーコード番号
+        using_members_barcode: 会員バーコード
+        barcode_type: バーコード形式
+        <<: *distribution_setting
+        <<: *deep_link_setting_attributes
+        usable_period: 有効期間
+        usable_start_at: 有効開始日時
+        usable_end_at: 有効終了日時
+        effective_days: 日数
+        usage_limit: 上限
+        used_count: 使用
+        created_at: 作成日時
+        updated_at: 更新日時
+      item:
+        id: ID
+        item_type: 種別
+        name: 商品名
+        item_code: 商品番号
+        jan_code: JANコード
+        sub_text: 見出し・ブランド名など
+        price: 通常価格
+        sale_price: セール価格
+        tax_notation: 税表記
+        description: 詳細
+        note: 注記
+        store_link_text: 外部リンクラベル
+        store_link_url: 外部リンクURL
+        spec_presence: 仕様表記欄
+        spec_headline: 仕様表記欄のタイトル
+        spec_note: 仕様に関する注記
+        posted_at: 掲載開始日
+        status: 状態
+      item_category:
+        id: ID
+        code: コード
+        name: 名称
+        image: 画像
+        caption: キャプション
+        status: 状態
+        child_categories: 子カテゴリー
+        item_count: アイテム数
+      item_category_path:
+        ancestor: 祖先
+        ancestor_id: 祖先
+        descendant: 子孫
+        descendant_id: 子孫
+      item_label:
+        id: ID
+        name: ラベル名
+        background_color: 背景色
+      item_spec_content:
+        id: ID
+        item_id: 商品ID
+        title: タイトル
+        value: 内容
+      search_form:
+        limit: limit
+        offset: offset
+        keyword: キーワード
+      deep_link_setting:
+        deep_link_type: 遷移先
+        deep_link_id: エントリー
+        external_url: ディープリンクURL
+      segment:
+        segment_type: セグメントタイプ
+      segment/user_attribute:
+        store_segment_type: お気に入り店舗指定
+        gender: 性別
+        rank: ランク
+        birth_date: 生年月日
+        birth_month: 誕生月
+        nickname: ニックネーム
+        prefecture_code: 都道府県
+      medium:
+        file: 画像
+        thumbnail: サムネイル画像
+      user:
+        ID: ID
+        code: 会員ID
+        pin: PINコード
+        gender: 性別
+        rank: ランク
+        point: ポイント
+        birth_date: 生年月日
+        birth_month: 誕生月
+        nickname: ニックネーム
+        prefecture_code: 都道府県コード
+        prefecture: 都道府県
+        status: 状態
+        created_at: 登録日時
+      device:
+        registration_id: Registration ID
+        term_name: 機種
+        os_type: OS
+        os_version: OSバージョン
+        app_version: アプリバージョン
+      restore_user:
+        id: ID
+        user_id: ユーザーID
+        restore_user_id: 復元ユーザーID
+        created_at: 復元日時
+        updated_at: 更新日時
+      point_history:
+        user_id: 会員ID
+        point: ポイント
+        store_id: 店舗
+        action_code: 種別
+        changed_at: 変更日時
+      visit_history:
+        user_id: 会員
+        store_id: 店舗
+        created_at: 日時
+      restore_user_device:
+        restore_id: 復元履歴ID
+        old_device: 旧端末
+        old_device_id: 旧端末
+        new_device: 新端末
+        new_device_id: 新端末
+      content_registrar:
+        owner_id: コンテンツID
+        owner_type: コンテンツタイプ
+        registrar_type: 登録タイプ
+        file: ファイル
+        description: 詳細
+        status: 登録状態
+      news_tab:
+        tab: タブ名
+        news1_tab: ニュース1
+        news2_tab: ニュース2
+        id: ID
+        name: 名称
+        layout_type: 表示形式
+        thumbnail_ratio: 画像縦横比
+        is_all: 全てのニュース
+        is_follow_store: フォロー店舗のニュース
+        content: 内容
+        category: カテゴリ
+      picture_card_style:
+        display_new_icon: NEWアイコン
+        position: 要素の配置
+        color_style: 要素の色
+        display_button: ボタン
+        button_style: スタイル
+        display_title: タイトル
+      csv_registration:
+        column_separator: 区切り文字
+        quote: 囲い文字
+      store_images:
+        image: 画像
+      media:
+        file: 画像
+      coupon_image:
+        image: '画像'
+      rank:
+        id: ID
+        name: ランク名
+        code: ランクコード
+        card_image: 画像
+        gauge_drawing_color: 描画色
+        gauge_background_color: 背景色
+        card_text_color: 文字色
+        sort_order: 表示順
+        created_at: 作成日時
+        updated_at: 更新日時
+      store_configuration:
+        display_favorite_button: フォローボタン
+        favorite_label: フォローボタンラベル
+        unfavorite_label: フォロー解除ボタンラベル
+        link_label: 外部リンクラベル
+        favorite_heading: フォロー店舗見出し
+        favorite_blank_heading: フォロー店舗がない時の見出し
+        favorite_blank_message: フォロー店舗がない時のメッセージ
+
+  activemodel:
+    <<: *activerecord
+    attributes:
+      mgre/auth/base_auth_service:
+        user: ユーザー
+        user_account: ユーザーアカウント
+
+  distribution_settingable_status: &distribution_settingable_status
+    draft: 下書き
+    fixed: 承認待ち
+    published: 承認済み
+    suspended: 公開停止
+    # 以下は管理画面用で値としては存在しないステータス
+    no_scope: すべて
+    publishing: 公開中
+    publish_end: 公開終了
+
+  delivery_type: &delivery_type
+    normal: 通常
+    system: システム
+    parent: システム連携
+    child: システム連携（子）
+
+  enumerize:
+    distribution_setting:
+      status:
+        <<: *distribution_settingable_status
+    news:
+      status:
+        <<: *distribution_settingable_status
+      popup_type:
+        normal: 通常
+        with_popup: 通常 + ポップアップ
+        popup_only: ポップアップのみ
+      view_type:
+        none: 遷移なし
+        native: ニュース詳細
+        webview: ウェブ
+        url_scheme: ディープリンク
+    information:
+      status:
+        <<: *distribution_settingable_status
+      delivery_type:
+        <<: *delivery_type
+      popup_type:
+        normal: 通常
+        with_popup: 通常 + ポップアップ
+        popup_only: ポップアップのみ
+      view_type:
+        none: 遷移なし
+        native: お知らせ詳細
+        webview: ウェブ
+        url_scheme: ディープリンク
+      target_type:
+        entire: すべて
+        information: お知らせ
+        memberscard: 会員証
+    banner:
+      status:
+        <<: *distribution_settingable_status
+      target_type:
+        entire: すべて
+        news: ニュース
+        news2: ニュース2
+        memberscard: 会員証
+      view_type:
+        none: 遷移なし
+        webview: ウェブ
+        url_scheme: ディープリンク
+    banner_target:
+      target_type:
+        entire: すべて
+        news: ニュース
+        news2: ニュース2
+        memberscard: 会員証
+    cms_user:
+      role:
+        member: メンバー
+        admin: 管理者
+      email_notification:
+        disabled: 通知しない
+        enabled: 通知する
+    notification:
+      publish_type:
+        now: 今すぐ配信
+        later: あとで配信
+      target_type:
+        all: 全員
+        ios: iOS
+        android: android
+        specific: ユーザー指定
+      delivery_type:
+        <<: *delivery_type
+      status:
+        draft: 下書き
+        fixed: 承認待ち
+        reserved: 予約済み
+        publishing: 配信中
+        published: 配信済み
+        canceled: 配信中止
+        failed: 配信失敗
+        no_scope: すべて # 管理画面用ステータス
+    coupon:
+      status:
+        <<: *distribution_settingable_status
+      coupon_type:
+        normal: 通常
+        gainable: 獲得クーポン
+        limited: 枚数制限クーポン
+      usage_rule:
+        once_only: 1回限り
+        unlimited: 無制限
+        once_a_day: 1日1回
+      barcode_type:
+        code128: Code128
+        ean13: EAN13
+        codabar: Codabar
+        qr: QR
+    coupon_image:
+      preset_flag:
+        enabled: 有効
+        disabled: 無効
+    user_coupon:
+      usable_status:
+        active: ''
+        inactive: ''
+        coming_soon: もうすぐ開始
+        end_soon: まもなく終了
+        used_in_today: 本日使用済み
+    store:
+      status:
+        open: 営業中
+        closed: 閉店
+    item:
+      item_type:
+        normal: EAP商品
+        external: 外部ECサイト
+        simple: 自由入力
+      status:
+        enabled: 公開
+        disabled: 非公開
+    item_category:
+      status:
+        enabled: 公開
+        disabled: 非公開
+    segment:
+      segment_type:
+        none: なし
+        user_attributes: ユーザー属性
+        specific_user: ユーザーID指定
+    segment/user_attribute:
+      store_segment_type:
+        all_store: 全店舗
+        specific_store: 一部店舗
+      gender:
+        all: すべて
+        male: 男性
+        female: 女性
+        unselected: 未設定
+      rank:
+        all: すべて
+        level_1: ブロンズ
+        level_2: シルバー
+        level_3: ゴールド
+        level_4: プラチナ
+        level_5: ダイヤモンド
+    deep_link_setting:
+      deep_link_type:
+        none: 遷移なし
+        news: ニュース
+        news2: ニュース2
+        news_detail: ニュース詳細
+        coupon: クーポン
+        coupon_detail: クーポン詳細
+        store: 店舗
+        store_detail: 店舗詳細
+        information: お知らせ
+        information_detail: お知らせ詳細
+        memberscard: 会員証
+        item: 商品
+        item_by_category: 商品カテゴリー別
+        item_detail: 商品詳細
+        other: その他
+    user:
+      gender:
+        male: 男性
+        female: 女性
+        unselected: 未設定
+      rank:
+        level_1: ブロンズ
+        level_2: シルバー
+        level_3: ゴールド
+        level_4: プラチナ
+        level_5: ダイヤモンド
+      status:
+        unauthorized: 未承認
+        authorized: 承認済み
+        restored: 復元済み
+    point_history:
+      action_code:
+        check_in: チェックイン
+        follow: フォロー
+        buy: 購入
+        rank_up: ランクアップ
+        profile_register: プロフィール登録
+        use: ポイント利用
+        other: その他
+    content_registrar:
+      registrar_type:
+        file: ファイル連携
+        api: API連携
+      status:
+        processing: 処理中
+        succeed: 登録済み
+        failed: 登録失敗
+        validation_error: 検証エラー
+        retry_waiting: 登録待機中
+    news_tab:
+      layout_type:
+        one_column: 1カラムカセット
+        two_column: 2カラムカセット
+        grid: グリッド
+        picture_card: ピクチャーカード
+      thumbnail_ratio:
+        ratio_16_9: '16:9'
+        ratio_4_3: '4:3'
+        ratio_1_1: '1:1'
+        ratio_5_6: '5:6'
+        own_course: 自由比率
+    picture_card_style:
+      position:
+        center: 中央
+        bottom_left: 左下
+      color_style:
+        white: 白
+        black: 黒
+      button_style:
+        solid: 塗り
+        outline: 線
+    csv_registration:
+      column_separator:
+        comma: カンマ
+        tab: タブ
+      quote:
+        none: 指定なし
+        single: シングルクォート
+        double: ダブルクォート
+
+  view:
+    coupons:
+      presentation: 【この画面をご提示ください】
+      available_stores_text: 【クーポン利用可能店舗】
+      label_text:
+        used: 使用済み
+        expired: 期限切れ
+        not_yet: 利用可能前
+        used_in_today: 本日分使用済み
+        limit_exceeded: 枚数上限
+      button_text:
+        use: 使用する
+        used: 使用済み
+        expired: 期限切れ
+        not_yet: まだご利用できません
+        used_in_today: 本日分使用済み
+        limit_exceeded: 枚数上限に達しました
+    cms_user_mailer:
+      contents_fixed_mail:
+        subject: 【公開申請のお知らせ】コンテンツが公開申請されました
+      contents_published_mail:
+        subject: 【公開のお知らせ】コンテンツが公開されました
+      published_contents_changed_mail:
+        subject: 【公開済みコンテンツ変更のお知らせ】公開済みコンテンツに変更がありました
+    users:
+      membership:
+        max_rank: 現在最高ランクです
+        bonus: 特典
+        next_message: "%{target}まで、あと%{difference}ポイント"
+
+  api:
+    v1:
+      coupons:
+        use:
+          create:
+            success: クーポンを使用しました。
+            fail: 現在使用できないクーポンです。
+        show:
+          not_distribute: お気に入り店舗に配信されていないクーポンです。

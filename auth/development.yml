@@ -1,0 +1,35 @@
+version: 1
+
+api:
+  request:
+    # 連携先 API のベース URL
+    base_url: https://development.mgre.co.jp/
+    common_params:
+    common_headers:
+      "Content-Type": application/x-www-form-urlencoded
+    # ベーシック認証が必要な場合はコメントアウトを外す
+    # basic_auth:
+    #   user: user
+    #   password: password
+  response:
+    # レスポンスの形式を記述する
+    # xml or json
+    format: xml
+  configured:
+    # 各 API の情報を記述する
+    api1:
+      http_method: post
+      path: path/to/api1
+      request:
+        params:
+        headers:
+    api2:
+      http_method: get
+      path: path/to/api2
+      request:
+        params:
+        headers:
+
+client:
+  timeout: 8
+  retry_count: 3
