@@ -57,8 +57,3 @@ staging:
 
 production:
   <<: *default
-  host: 127.0.0.1
-  port: 3316
-  username: root
-  password:
-  database: mgre_core_development
