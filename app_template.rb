@@ -96,6 +96,9 @@ config.hosts << '.#{domain}'
 
 ), env: 'development'
 
+# develop 環境の作成
+run 'cp config/environments/production.rb config/environments/develop.rb'
+
 # config/routes.rb の指定
 route(%{
   resource :healthcheck, only: :show, module: :#{namespace}, controller: :healthchecks
