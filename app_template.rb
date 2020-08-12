@@ -35,8 +35,8 @@ plan = plan_list.find { |plan| plan[:label] == selection.chomp }[:value]
 
 domain = ask('先頭のサブドメインを除いたドメインを入力してください（ demo.mgre.local であれば mgre.local）')
 
-namespace = ask('ネームスペースを入力してください（英数字小文字）')
-module_name = ask('ネームスペースのモジュール名を入力してください（先頭英数字大文字）')
+namespace = ask('ネームスペースを入力してください（英数字小文字 例：lanchester）')
+module_name = ask('ネームスペースのモジュール名を入力してください（先頭英数字大文字 例：Lanchester）')
 
 use_sentry = yes?('Sentry を使いますか？（y/n）')
 
@@ -221,9 +221,21 @@ end
 CODE
 end
 
+# Docker・デプロイ用ファイルを追加
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/Dockerfile', 'Dockerfile'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/docker-compose.yml', 'docker-compose.yml'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/Dockerfile.deploy.append', 'Dockerfile.deploy.append'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/taskdef-api.json', 'taskdef-api.json'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/scripts/start_api.sh', 'scripts/start_api.sh'
+
+# テナント用の設定に変更
+gsub_file 'docker-compose.yml', /TENANT_NAMESPACE/, namespace
+
 # spring を再起動
 run 'bin/spring stop'
 
 if use_sentry
   say '`config/initializers/sentry.rb` に https://sentry.io/ で取得した DSN を指定してください。'
 end
+
+say 'done.'

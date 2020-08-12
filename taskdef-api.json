@@ -1,0 +1,122 @@
+{
+    "family": "<AWS_STACK_NAME>-api",
+    "cpu": "1 vCPU",
+    "memory": "2.0 GB",
+    "taskRoleArn": "<TASK_ROLE_ARN>",
+    "executionRoleArn": "<TASK_EXECUTION_ROLE_ARN>",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "containerDefinitions": [
+        {
+            "name": "<AWS_STACK_NAME>-api",
+            "image": "<IMAGE1_NAME>",
+            "essential": true,
+            "entryPoint": [
+                "/rails/scripts/start_api.sh"
+            ],
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/<AWS_STACK_NAME>/api",
+                    "awslogs-region": "ap-northeast-1",
+                    "awslogs-stream-prefix": "api"
+                }
+            },
+            "secrets": [
+                {
+                    "name": "MGRE_CORE_RDS_HOSTNAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_CORE_RDS_HOSTNAME"
+                },
+                {
+                    "name": "MGRE_CORE_RDS_PORT",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_CORE_RDS_PORT"
+                },
+                {
+                    "name": "MGRE_CORE_RDS_DB_NAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_CORE_RDS_DB_NAME"
+                },
+                {
+                    "name": "MGRE_CORE_RDS_TENANT_DB_NAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_CORE_RDS_TENANT_DB_NAME"
+                },
+                {
+                    "name": "MGRE_TENANT_RDS_HOSTNAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_TENANT_RDS_HOSTNAME"
+                },
+                {
+                    "name": "MGRE_TENANT_RDS_PORT",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_TENANT_RDS_PORT"
+                },
+                {
+                    "name": "MGRE_TENANT_RDS_USERNAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_TENANT_RDS_USERNAME"
+                },
+                {
+                    "name": "MGRE_TENANT_RDS_PASSWORD",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_TENANT_RDS_PASSWORD"
+                },
+                {
+                    "name": "MGRE_TENANT_RDS_DB_NAME",
+                    "valueFrom": "/<AWS_STACK_NAME>/MGRE_TENANT_RDS_DB_NAME"
+                },
+                {
+                    "name": "RAILS_MASTER_KEY",
+                    "valueFrom": "/<AWS_STACK_NAME>/RAILS_MASTER_KEY"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "AWS_REGION",
+                    "value": "<AWS_REGION>"
+                },
+                {
+                    "name": "AWS_STACK_NAME",
+                    "value": "<AWS_STACK_NAME>"
+                },
+                {
+                    "name": "TENANT_S3_PREFIX",
+                    "value": "<TENANT_S3_PREFIX>"
+                },
+                {
+                    "name": "RAILS_ENV",
+                    "value": "<RAILS_ENV>"
+                },
+                {
+                    "name": "RAILS_LOG_TO_STDOUT",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "name": "mackerel-container-agent",
+            "image": "mackerel/mackerel-container-agent:latest",
+            "essential": false,
+            "memory": 128,
+            "secrets": [
+                {
+                    "name": "MACKEREL_APIKEY",
+                    "valueFrom": "/<AWS_STACK_NAME>/MACKEREL_APIKEY"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "MACKEREL_CONTAINER_PLATFORM",
+                    "value": "ecs"
+                },
+                {
+                    "name": "MACKEREL_ROLES",
+                    "value": "<AWS_STACK_NAME>:api"
+                }
+            ]
+        }
+    ]
+}

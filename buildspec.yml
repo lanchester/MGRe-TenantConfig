@@ -1,0 +1,42 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+  pre_build:
+    commands:
+      - cat Dockerfile Dockerfile.deploy.append > Dockerfile.deploy
+      - $(aws ecr get-login --no-include-email --region $AWS_REGION)
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$IMAGE_REPO_NAME
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+  build:
+    commands:
+      - docker build --no-cache --build-arg BUNDLE_GITHUB__COM=$BUNDLE_GITHUB__COM -f Dockerfile.deploy -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - printf '{"Version":"1.0","ImageURI":"%s"}' $REPOSITORY_URI:$IMAGE_TAG > imageDetail.json
+      - >
+        cat taskdef-api.json
+        | sed -e "s|<AWS_REGION>|$AWS_REGION|g"
+        | sed -e "s|<AWS_STACK_NAME>|$AWS_STACK_NAME|g"
+        | sed -e "s|<TASK_ROLE_ARN>|$TASK_ROLE_ARN|g"
+        | sed -e "s|<TASK_EXECUTION_ROLE_ARN>|$TASK_EXECUTION_ROLE_ARN|g"
+        | sed -e "s|<TENANT_S3_PREFIX>|$TENANT_S3_PREFIX|g"
+        | sed -e "s|<RAILS_ENV>|$RAILS_ENV|g"
+        > /tmp/taskdef-api.json
+      - cp -f /tmp/taskdef-api.json taskdef-api.json
+      - >
+        cat appspec-api.yaml
+        | sed -e "s|<AWS_STACK_NAME>|$AWS_STACK_NAME|g"
+        > /tmp/appspec-api.yaml
+      - cp -f /tmp/appspec-api.yaml appspec-api.yaml
+artifacts:
+  files:
+    - imageDetail.json
+    - taskdef-api.json
+    - appspec-api.yaml
