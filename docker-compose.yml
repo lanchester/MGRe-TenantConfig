@@ -1,0 +1,58 @@
+version: '3'
+services:
+  TENANT_NAMESPACE_db:
+    image: mysql:5.6
+    container_name: TENANT_NAMESPACE_db
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      - MYSQL_DATABASE=TENANT_NAMESPACE_db
+      - MYSQL_USER=root
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - '3326:3316'
+    networks:
+      - mgre
+    expose:
+      - '3306'
+    volumes:
+      - TENANT_NAMESPACE_mysql_data:/var/lib/mysql
+  TENANT_NAMESPACE_api:
+    container_name: TENANT_NAMESPACE_api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUNDLE_GITHUB__COM: $BUNDLE_GITHUB__COM
+    environment:
+      MGRE_CORE_RDS_HOSTNAME: core_db
+      MGRE_CORE_RDS_PORT: 3326
+      MGRE_CORE_RDS_DB_NAME: mgre_core_development
+      MGRE_CORE_RDS_TENANT_DB_NAME: mgre_tenant_TENANT_NAMESPACE_development
+      MGRE_TENANT_RDS_HOSTNAME: TENANT_NAMESPACE_db
+      MGRE_TENANT_RDS_PORT: 3326
+      MGRE_TENANT_RDS_USERNAME: root
+      MGRE_TENANT_RDS_PASSWORD: ''
+      MGRE_TENANT_RDS_DB_NAME: TENANT_NAMESPACE_db
+      RAILS_LOG_TO_STDOUT: 'true'
+      RAILS_ENV: development
+    entrypoint: /rails/scripts/start_api.sh
+    volumes:
+      - .:/rails:cached
+      - TENANT_NAMESPACE_bundle_data:/bundle
+    ports:
+      - '3002:3000'
+    networks:
+      - mgre
+    depends_on:
+      - TENANT_NAMESPACE_db
+    tty: true
+    stdin_open: true
+volumes:
+  TENANT_NAMESPACE_mysql_data:
+    driver: local
+  TENANT_NAMESPACE_bundle_data:
+    driver: local
+networks:
+  mgre:
+    external: true
