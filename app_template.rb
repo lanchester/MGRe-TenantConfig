@@ -7,6 +7,11 @@ plan_list = [
     standard: true,
   },
   {
+    value: 'std_cp',
+    label: '[スタンダードプラン]CROSSPOINT(単体)',
+    standard: true,
+  },
+  {
     value: 'enterprise',
     label: 'エンタープライズ',
     standard: false,
