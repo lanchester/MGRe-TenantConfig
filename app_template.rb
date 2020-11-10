@@ -235,6 +235,9 @@ get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/scrip
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/buildspec.yml', 'buildspec.yml'
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/appspec-api.yaml', 'appspec-api.yml'
 
+# 実行権限を付与
+run 'chmod 755 scripts/start_api.sh'
+
 # テナント用の設定に変更
 gsub_file 'docker-compose.yml', /TENANT_NAMESPACE/, namespace
 
