@@ -228,6 +228,7 @@ get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/Docke
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/taskdef-api.json', 'taskdef-api.json'
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/scripts/start_api.sh', 'scripts/start_api.sh'
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/buildspec.yml', 'buildspec.yml'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/appspec-api.yaml', 'appspec-api.yml'
 
 # テナント用の設定に変更
 gsub_file 'docker-compose.yml', /TENANT_NAMESPACE/, namespace
