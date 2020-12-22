@@ -12,6 +12,11 @@ plan_list = [
     standard: true,
   },
   {
+    value: 'std_cpfs',
+    label: '[スタンダードプラン]CROSSPOINT×フューチャーショップ',
+    standard: true,
+  },
+  {
     value: 'enterprise',
     label: 'エンタープライズ',
     standard: false,
