@@ -129,7 +129,7 @@ route(%{
     end
   end
 
-  mount MGRe::Auth::Engine => '/api'
+  mount MGRe::Auth::Engine => '/'
 
 })
 
