@@ -60,7 +60,8 @@ run "echo '#{ruby_version}' > ./.ruby-version"
 # add to Gemfile
 append_file 'Gemfile', %(
 # マルチ DB
-gem 'apartment', github: 'influitive/apartment', branch: 'development'
+# Rails 6.1 以降に対応した influitive/apartment のフォークリポジトリ
+gem 'ros-apartment', require: 'apartment'
 # MGRe ユーザ認証
 gem 'mgre-auth', git: 'https://github.com/lanchester/MGRe-Auth.git', branch: 'develop'
 )
