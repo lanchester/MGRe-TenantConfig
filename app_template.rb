@@ -250,6 +250,12 @@ gsub_file 'docker-compose.yml', /TENANT_NAMESPACE/, namespace
 # spring を再起動
 run 'bin/spring stop'
 
+# .gitignore を追加
+append_file '.gitignore', %(
+/public/uploads
+/vendor/bundle
+)
+
 if use_sentry
   say '`config/initializers/sentry.rb` に https://sentry.io/ で取得した DSN を指定してください。'
 end
