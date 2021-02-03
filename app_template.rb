@@ -239,7 +239,7 @@ get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/Docke
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/taskdef-api.json', 'taskdef-api.json'
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/scripts/start_api.sh', 'scripts/start_api.sh'
 get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/buildspec.yml', 'buildspec.yml'
-get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/appspec-api.yaml', 'appspec-api.yml'
+get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/appspec-api.yaml', 'appspec-api.yaml'
 
 # 実行権限を付与
 run 'chmod 755 scripts/start_api.sh'
