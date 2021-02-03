@@ -1,4 +1,4 @@
-FROM ruby:2.7.1-alpine3.11
+FROM ruby:3.0.0-alpine3.12
 ENV LANG=C.UTF-8 \
     BUNDLE_PATH=/bundle \
     APP_DIR=/rails \
