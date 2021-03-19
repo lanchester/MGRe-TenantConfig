@@ -72,7 +72,8 @@ insert_into_file 'Gemfile',%(
 if use_sentry
 append_to_file 'Gemfile', %(
 # エラー通知
-gem 'sentry-raven'
+gem 'sentry-ruby'
+gem 'sentry-rails'
 )
 end
 
@@ -160,12 +161,7 @@ end
 
 # Sentry を設定
 if use_sentry
-initializer 'sentry.rb', %(Raven.configure do |config|
-  config.dsn = '...'
-  config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-  config.environments = %w[production develop]
-end
-)
+  get 'https://raw.githubusercontent.com/lanchester/MGRe-TenantConfig/master/sentry.rb', 'config/initializers/sentry.rb'
 end
 
 # 日本語 locale を設定
@@ -200,13 +196,13 @@ CODE
 
 if use_sentry
   insert_into_file api_controller_path, %(
-    before_action :set_raven_context
+    before_action :set_sentry_context
 
     private
 
-    def set_raven_context
-      Raven.user_context(id: current_user&.id)
-      Raven.extra_context(params: params.to_unsafe_h, url: request.url)
+    def set_sentry_context
+      Sentry.set_user(id: current_user&.id)
+      Sentry.set_extras(params: params.to_unsafe_h, url: request.url)
     end), after: 'class ApiController < MGRe::Auth::ApiController'
 end
 
@@ -257,7 +253,7 @@ append_file '.gitignore', %(
 )
 
 if use_sentry
-  say '`config/initializers/sentry.rb` に https://sentry.io/ で取得した DSN を指定してください。'
+  say 'セットアップ完了後 `config/initializers/sentry.rb` に https://sentry.io/ で取得した DSN を指定してください。'
 end
 
 say 'done.'
