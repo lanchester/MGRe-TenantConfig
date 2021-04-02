@@ -45,8 +45,9 @@ plan = plan_list.find { |plan| plan[:label] == selection.chomp }[:value]
 
 domain = ask('ローカル環境での開発時のドメインを、先頭のサブドメインを除いて入力してください（ demo.mgre.local であれば mgre.local）')
 
-namespace = ask('ネームスペースを入力してください（英数字小文字 例：lanchester）')
-module_name = ask('ネームスペースのモジュール名を入力してください（先頭英数字大文字 例：Lanchester）')
+namespace = ask('ネームスペースを入力してください（英数字小文字 例：lanchester、tnf（TheNorthFace））')
+
+module_name = ask('ネームスペースのモジュール名を入力してください（先頭英数字大文字 例：Lanchester、TNF（TheNorthFace））')
 
 use_sentry = yes?('Sentry を使いますか？（y/n）')
 
