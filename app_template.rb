@@ -64,7 +64,7 @@ append_file 'Gemfile', %(
 # Rails 6.1 以降に対応した influitive/apartment のフォークリポジトリ
 gem 'ros-apartment', require: 'apartment'
 # MGRe ユーザ認証
-gem 'mgre-auth', git: 'https://github.com/lanchester/MGRe-Auth.git', branch: 'develop'
+gem 'mgre-auth', git: 'https://github.com/lanchester/MGRe-Auth.git', branch: 'master'
 )
 
 insert_into_file 'Gemfile',%(
