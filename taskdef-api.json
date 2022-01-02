@@ -98,7 +98,7 @@
         },
         {
             "name": "mackerel-container-agent",
-            "image": "mackerel/mackerel-container-agent:latest",
+            "image": "public.ecr.aws/mackerel/mackerel-container-agent:latest",
             "essential": false,
             "memory": 128,
             "secrets": [
