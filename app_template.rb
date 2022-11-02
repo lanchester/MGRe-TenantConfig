@@ -17,6 +17,11 @@ plan_list = [
     standard: true,
   },
   {
+    value: 'std_face',
+    label: '[スタンダードプラン]F.ACE',
+    standard: true,
+  },
+  {
     value: 'enterprise',
     label: 'エンタープライズ',
     standard: false,
@@ -64,7 +69,7 @@ append_file 'Gemfile', %(
 # Rails 6.1 以降に対応した influitive/apartment のフォークリポジトリ
 gem 'ros-apartment', require: 'apartment'
 # MGRe ユーザ認証
-gem 'mgre-auth', git: 'https://github.com/lanchester/MGRe-Auth.git', branch: 'master'
+gem 'mgre-auth', git: 'https://github.com/lanchester/MGRe-Auth.git'
 )
 
 insert_into_file 'Gemfile',%(
