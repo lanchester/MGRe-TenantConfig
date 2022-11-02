@@ -1,10 +1,10 @@
-FROM ruby:3.0.0-alpine3.12
+FROM ruby:3.0.1-alpine3.13
 ENV LANG=C.UTF-8 \
     BUNDLE_PATH=/bundle \
     APP_DIR=/rails \
-    IMAGEMAGICK6_URL=http://dl-4.alpinelinux.org/alpine/v3.11/community/x86_64/ \
+    IMAGEMAGICK6_URL=https://dl-cdn.alpinelinux.org/alpine/v3.13/community/x86_64/ \
     IMAGEMAGICK6_PREFIX=imagemagick6 \
-    IMAGEMAGICK6_VER=6.9.10.75-r0
+    IMAGEMAGICK6_VER=6.9.11.55-r0
 WORKDIR $APP_DIR
 COPY /Gemfile $APP_DIR
 COPY /Gemfile.lock $APP_DIR
