@@ -22,6 +22,11 @@ plan_list = [
     standard: true,
   },
   {
+    value: 'mgre_crm',
+    label: 'MGReCRM',
+    standard: true,
+  },
+  {
     value: 'enterprise',
     label: 'エンタープライズ',
     standard: false,
