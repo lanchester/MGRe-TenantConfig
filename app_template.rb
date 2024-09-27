@@ -22,6 +22,11 @@ plan_list = [
     standard: true,
   },
   {
+    value: 'ecbeing',
+    label: 'ecbeing',
+    standard: true,
+  },
+  {
     value: 'enterprise',
     label: 'エンタープライズ',
     standard: false,
